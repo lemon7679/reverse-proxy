@@ -77,7 +77,7 @@ func main() {
             log.Fatalf("Invalid target URL for %s: %v", domain, err)
         }
         proxies[domain] = newReverseProxy(targetURL)
-        fmt.Printf("Routing %s -> %s", domain, targetStr)
+        log.Printf("Routing %s -> %s", domain, targetStr)
     }
 
     handler := func(w http.ResponseWriter, r *http.Request) {
@@ -99,9 +99,9 @@ func main() {
     if addr == ":" {
         addr = ":" + strconv.Itoa(config.Port)
     } else {
-        fmt.Printf("Using port from environment variable: %s", addr)
+        log.Printf("Using port from environment variable: %s", addr)
     }
 
-    fmt.Printf("Starting proxy server on port %d (with WebSocket support)", config.Port)
-    fmt.Print(http.ListenAndServe(addr, http.HandlerFunc(handler)))
+    log.Printf("Starting proxy server on port %d (with WebSocket support)", config.Port)
+    log.Print(http.ListenAndServe(addr, http.HandlerFunc(handler)))
 }
